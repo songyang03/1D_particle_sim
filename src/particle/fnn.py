@@ -28,20 +28,21 @@ def fnn(series, tau, max_dim=10, R_tol=10.0,
                 ncount += 1
         k.append(ncount / (num-m+1))     
     return k
-with h5py.File("k0p35_a0p10_nppc500_t40_no_w_sample200.h5", "r") as f:
-    m1_amplitude= f["diagnostics"]["m1_amplitude"][:]
-    weight_rms = f["diagnostics"]["weight_rms"][:]
-    field_energy = f["diagnostics"]["field_energy"][:]
-    v=f["particles"]["v"][:]
-    x=f["particles"]["x"][:]
-    t = np.arange(field_energy.shape[0]) * 0.01
-    a=list()
-    for i in range(200):
-        tau=dmi(x[:,i])
-        p=fnn(x[:,i], tau)
-        a.append(p[1])
-    fig, ax = plt.subplots()
-    ax.plot(range(1, len(a) + 1), a, "o-")
-    ax.set_title("FNN Method")
-    plt.show()
-    print(a)
+if __name__ == "__main__": 
+    with h5py.File("k0p35_a0p10_nppc500_t40_no_w_sample200.h5", "r") as f:
+        m1_amplitude= f["diagnostics"]["m1_amplitude"][:]
+        weight_rms = f["diagnostics"]["weight_rms"][:]
+        field_energy = f["diagnostics"]["field_energy"][:]
+        v=f["particles"]["v"][:]
+        x=f["particles"]["x"][:]
+        t = np.arange(field_energy.shape[0]) * 0.01
+        a=list()
+        for i in range(200):
+            tau=dmi(x[:,i])
+            p=fnn(x[:,i], tau)
+            a.append(p[0])
+        fig, ax = plt.subplots()
+        ax.plot(range(1, len(a) + 1), a, "o-")
+        ax.set_title("FNN Method")
+        plt.show()
+        print(a)
