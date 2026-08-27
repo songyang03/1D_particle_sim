@@ -36,13 +36,23 @@ if __name__ == "__main__":
         v=f["particles"]["v"][:]
         x=f["particles"]["x"][:]
         t = np.arange(field_energy.shape[0]) * 0.01
-        a=list()
-        for i in range(200):
-            tau=dmi(x[:,i])
-            p=fnn(x[:,i], tau)
-            a.append(p[0])
-        fig, ax = plt.subplots()
-        ax.plot(range(1, len(a) + 1), a, "o-")
-        ax.set_title("FNN Method")
+
+        # a=list()
+        # for i in range(200):
+        #     tau=dmi(x[:,i])
+        #     p=fnn(x[:,i], tau)
+        #     a.append(p[0])
+        # fig, ax = plt.subplots()
+        # ax.plot(range(1, len(a) + 1), a, "o-")
+        # ax.set_title("FNN Method")
+        # plt.show()
+        # print(a)
+        num=103
+        p=fnn(x[:,num], 1)
+        fig, ax = plt.subplots(1,2)
+        ax[0].plot(range(1, len(p) + 1), p, "o-")
+        ax[0].set_title("FNN Method")
+        ax[1].plot(x[:,num], v[:,num])  
+        ax[1].set_title("Particle Phase Space")
+        ax[1].set_xlabel("x"); ax[1].set_ylabel("v")  
         plt.show()
-        print(a)
